@@ -1,0 +1,36 @@
+{
+    "name": "tennisbuchs",
+    "version": "0.0.1",
+    "description": "The entire tennis-buchs.ch web framework in one project",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "client": "cd client && npm start",
+        "server": "nodemon server.js",
+        "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
+        "build": "npm install && cd client && npm install && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Tenniscenter-Buchs/tennisbuchs.git"
+    },
+    "author": "Cedric Schwyter <cedricschwyter@bluewin.ch>",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/Tenniscenter-Buchs/tennisbuchs/issues"
+    },
+    "homepage": "https://github.com/Tenniscenter-Buchs/tennisbuchs#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "concurrently": "^5.3.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "nodemon": "^2.0.5"
+    },
+    "devDependencies": {
+        "eslint": "^6.6.0",
+        "eslint-config-prettier": "^6.12.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "prettier": "^2.1.2"
+    }
+}
