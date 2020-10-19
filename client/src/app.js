@@ -4,25 +4,17 @@ import { Header } from './header/header.js';
 import { Body } from './body/body.js';
 import { Footer } from './footer/footer.js';
 
-export default class App extends Component {
-    state = {
-        response: {},
-    };
+const { useEffect } = React;
 
-    componentDidMount() {
-        axios.get('/api/v1/say-something').then((res) => {
-            const response = res.data;
-            this.setState({ response });
-        });
-    }
+const App = ({ hideLoader }) => {
+    useEffect(hideLoader, []);
+    return (
+        <div className="app">
+            <Header />
+            <Body />
+            <Footer />
+        </div>
+    );
+};
 
-    render() {
-        return (
-            <div className="app">
-                <Header />
-                <Body />
-                <Footer />
-            </div>
-        );
-    }
-}
+export { App };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Twirl from 'hamburger-react';
+import { StickyContainer, Sticky  } from 'react-sticky';
 
 class Header extends Component {
     constructor(props) {
@@ -12,7 +12,11 @@ class Header extends Component {
 
     render() {
         return (
-            <Twirl toggled={this.state.isOpen} toggle={this.state.setOpen} />
+            <StickyContainer>
+                <Sticky>
+                    {({ style  }) => <h1 style={style}>Sticky element</h1>}
+                </Sticky>
+            </StickyContainer>
         );
     }
 }
