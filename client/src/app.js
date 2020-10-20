@@ -4,25 +4,31 @@ import { Header } from './header/header.js';
 import { Body } from './body/body.js';
 import { Footer } from './footer/footer.js';
 
-export default class App extends Component {
-    state = {
-        response: {},
-    };
+class App extends React.Component {
+
+    // fake authentication Promise
+    authenticate() {
+        return new Promise(resolve => setTimeout(resolve, 10000))
+    }
 
     componentDidMount() {
-        axios.get('/api/v1/say-something').then((res) => {
-            const response = res.data;
-            this.setState({ response });
-        });
+        this.authenticate().then(() => {
+            const ele = document.getElementById('ipl-progress-indicator')
+            if (ele) {
+                ele.classList.add('available')
+                setTimeout(() => {
+                    ele.outerHTML = ''
+                }, 2000)
+            }
+        })
     }
 
     render() {
         return (
-            <div className="app">
-                <Header />
-                <Body />
-                <Footer />
-            </div>
-        );
+             <div className="app">
+             </div>
+         );
     }
-}
+};
+
+export { App };

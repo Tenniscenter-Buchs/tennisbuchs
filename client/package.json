@@ -10,7 +10,9 @@
         "hamburger-react": "^2.2.0",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
-        "react-scripts": "3.4.3"
+        "react-loader": "^2.4.7",
+        "react-scripts": "3.4.3",
+        "react-sticky": "^6.0.3"
     },
     "scripts": {
         "start": "react-scripts start",
