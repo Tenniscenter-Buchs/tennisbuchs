@@ -4,17 +4,31 @@ import { Header } from './header/header.js';
 import { Body } from './body/body.js';
 import { Footer } from './footer/footer.js';
 
-const { useEffect } = React;
+class App extends React.Component {
 
-const App = ({ hideLoader }) => {
-    useEffect(hideLoader, []);
-    return (
-        <div className="app">
-            <Header />
-            <Body />
-            <Footer />
-        </div>
-    );
+    // fake authentication Promise
+    authenticate() {
+        return new Promise(resolve => setTimeout(resolve, 10000))
+    }
+
+    componentDidMount() {
+        this.authenticate().then(() => {
+            const ele = document.getElementById('ipl-progress-indicator')
+            if (ele) {
+                ele.classList.add('available')
+                setTimeout(() => {
+                    ele.outerHTML = ''
+                }, 2000)
+            }
+        })
+    }
+
+    render() {
+        return (
+             <div className="app">
+             </div>
+         );
+    }
 };
 
 export { App };
