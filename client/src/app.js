@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Header } from './header/header.js';
-import { Body } from './body/body.js';
-import { Footer } from './footer/footer.js';
+import { Header } from './components/header.js';
+import { Body } from './components/body.js';
+import { Footer } from './components/footer.js';
+import LoadingScreen from './components/loadingscreen.js';
 
-class App extends React.Component {
-
+class App extends Component {
     constructor(props) {
         super(props);
+        this.state = { isReady: false };
+        this.setReady = this.setReady.bind(this);
     }
 
+    setReady(ready) {
+        this.setState({ isReady: ready });
+    }
+
+    render() {
+        return (
+            <>
+                {!this.state.isReady && <LoadingScreen />}
+                <AppWrapper setReady={this.setReady} />
+            </>
+        );
+    }
+}
+
+class AppWrapper extends Component {
     componentDidMount() {
-        const ele = document.getElementById('ipl-progress-indicator')
-        if (ele) {
-            ele.classList.add('available')
-            setTimeout(() => {
-               ele.outerHTML = ''
-            }, 2000);
-        }
+        setTimeout(() => {
+            this.props.setReady(true);
+        }, 2000);
     }
-
     render() {
         return (
             <div className="app">
@@ -29,6 +41,6 @@ class App extends React.Component {
             </div>
         );
     }
-};
+}
 
 export { App };

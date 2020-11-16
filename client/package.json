@@ -7,11 +7,17 @@
         "@testing-library/react": "^9.5.0",
         "@testing-library/user-event": "^7.2.1",
         "axios": "^0.20.0",
+        "framer-motion": "^2.9.4",
         "hamburger-react": "^2.2.0",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
         "react-loader": "^2.4.7",
+        "react-mt-svg-lines": "^0.9.1",
+        "react-parallax-tilt": "^1.4.66",
         "react-scripts": "^4.0.0",
+        "react-spark-scroll": "^4.0.0",
+        "react-spark-scroll-gsap": "^4.0.0",
+        "react-spark-scroll-rekapi": "^4.0.0",
         "react-sticky": "^6.0.3"
     },
     "scripts": {
