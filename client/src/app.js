@@ -6,28 +6,28 @@ import { Footer } from './footer/footer.js';
 
 class App extends React.Component {
 
-    // fake authentication Promise
-    authenticate() {
-        return new Promise(resolve => setTimeout(resolve, 10000))
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
-        this.authenticate().then(() => {
-            const ele = document.getElementById('ipl-progress-indicator')
-            if (ele) {
-                ele.classList.add('available')
-                setTimeout(() => {
-                    ele.outerHTML = ''
-                }, 2000)
-            }
-        })
+        const ele = document.getElementById('ipl-progress-indicator')
+        if (ele) {
+            ele.classList.add('available')
+            setTimeout(() => {
+               ele.outerHTML = ''
+            }, 2000);
+        }
     }
 
     render() {
         return (
-             <div className="app">
-             </div>
-         );
+            <div className="app">
+                <Header />
+                <Body />
+                <Footer />
+            </div>
+        );
     }
 };
 
