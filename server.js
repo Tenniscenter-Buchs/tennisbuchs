@@ -9,6 +9,19 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
+if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.NODE_ENV === 'staging'
+) {
+    app.use((req, res, next) => {
+        if (req.header('x-forwarded-proto') !== 'https') {
+            res.redirect(`https://${req.header('host')}${req.url}`);
+        } else {
+            next();
+        }
+    });
+}
+
 const options = {
     definition: {
         openapi: '3.0.0',
@@ -32,11 +45,11 @@ const options = {
                 description: 'Local Integration Testing for API Version 1',
             },
             {
-                url: 'https://tennisbuchs-staging.herokuapp.com/api/v1',
+                url: 'https://staging.tennis-buchs.ch/api/v1',
                 description: 'Public Staging Testing for API Version 1',
             },
             {
-                url: 'https://tennisbuchs-production.herokuapp.com/api/v1',
+                url: 'https://production.tennis-buchs.ch/api/v1',
                 description: 'Production for API Version 1',
             },
         ],
@@ -78,10 +91,10 @@ if (
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 }
-
 app.get('*', (req, res) => {
-    res.status(200).json({
-        msg: 'Catch All',
+    res.status(404).json({
+        error: 'Resource not found',
+        msg: 'Well, this is awkward',
     });
 });
 
