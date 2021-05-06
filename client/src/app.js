@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Header } from './header/header.js';
-import { Body } from './body/body.js';
-import { Footer } from './footer/footer.js';
+import SignIn from './signin.js';
+import StickyFooter from './footer.js';
 
-class App extends React.Component {
-
-    constructor(props) {
-        super(props);
-    }
-
+class App extends Component {
     componentDidMount() {
-        const ele = document.getElementById('ipl-progress-indicator')
+        const ele = document.getElementById('ipl-progress-indicator');
         if (ele) {
-            ele.classList.add('available')
+            ele.classList.add('available');
             setTimeout(() => {
-               ele.outerHTML = ''
+                ele.outerHTML = '';
             }, 2000);
         }
     }
@@ -23,12 +16,11 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <Header />
-                <Body />
-                <Footer />
+                <SignIn />
+                <StickyFooter />
             </div>
         );
     }
-};
+}
 
 export { App };

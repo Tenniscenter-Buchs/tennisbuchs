@@ -1,7 +1,5 @@
-const saySomething = (req, res, next) => {
-    res.status(200).json({
-        body: 'Hello from the server!'
-    });
+const ping = (req, res, next) => {
+    res.status(200).send('pong');
 };
 
-module.exports.saySomething = saySomething;
+module.exports.ping = ping;
