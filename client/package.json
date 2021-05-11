@@ -10,11 +10,11 @@
         "@testing-library/user-event": "^7.2.1",
         "axios": "^0.21.1",
         "hamburger-react": "^2.2.0",
-        "material-ui": "^0.20.2",
+        "markdown-to-jsx": "^7.1.2",
         "react": "^16.14.0",
         "react-dom": "^16.14.0",
         "react-loader": "^2.4.7",
-        "react-scripts": "3.4.3",
+        "react-scripts": "^4.0.3",
         "react-sticky": "^6.0.3"
     },
     "scripts": {

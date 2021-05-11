@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import SignIn from './signin.js';
-import StickyFooter from './footer.js';
+import Blog from './portfolio/Blog.js';
 
 class App extends Component {
     componentDidMount() {
@@ -16,8 +15,7 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <SignIn />
-                <StickyFooter />
+                <Blog />
             </div>
         );
     }
