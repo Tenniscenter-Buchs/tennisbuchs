@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useAuth0 } from '@auth0/auth0-react';
+import Loader from '../loader.js';
 
 const LogoutButton = (props) => {
     const { logout } = useAuth0();
@@ -8,7 +9,10 @@ const LogoutButton = (props) => {
     return (
         <Button
             props={props}
-            onClick={() => logout({ returnTo: window.location.origin })}
+            onClick={() => {
+                Loader.engage();
+                logout({ returnTo: window.location.origin });
+            }}
         >
             Log Out
         </Button>
