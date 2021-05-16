@@ -8,10 +8,11 @@ const LoginButton = (props) => {
 
     return (
         <Button
-            props={props}
+            {...props}
             onClick={() => {
                 Loader.engage();
                 loginWithRedirect();
+                Loader.disengage();
             }}
         >
             Log In

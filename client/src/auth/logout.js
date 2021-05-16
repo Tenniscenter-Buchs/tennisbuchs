@@ -8,10 +8,11 @@ const LogoutButton = (props) => {
 
     return (
         <Button
-            props={props}
+            {...props}
             onClick={() => {
                 Loader.engage();
                 logout({ returnTo: window.location.origin });
+                Loader.disengage();
             }}
         >
             Log Out

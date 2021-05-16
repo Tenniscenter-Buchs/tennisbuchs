@@ -58,11 +58,7 @@ const options = {
 };
 
 const specs = swaggerJsdoc(options);
-app.use(
-    '/api-docs',
-    swaggerUi.serve,
-    swaggerUi.setup(specs, { explorer: true })
-);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
 app.use((req, res, next) => {
     console.log(`Request Endpoint: ${req.method} ${req.url}`);
