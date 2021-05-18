@@ -1,4 +1,6 @@
 const express = require('express');
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
@@ -60,11 +62,6 @@ const options = {
 const specs = swaggerJsdoc(options);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
-app.use((req, res, next) => {
-    console.log(`Request Endpoint: ${req.method} ${req.url}`);
-    next();
-});
-
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({
@@ -74,8 +71,52 @@ app.use(
 
 app.use(cors());
 
-const api = require('./routes/routes');
-app.use('/api/v1/', api);
+const pub = require('./routes/public');
+app.use('/api/v1/', pub);
+
+var jwtCheck;
+if (process.env.NODE_ENV === 'production') {
+    jwtCheck = jwt({
+        secret: jwks.expressJwtSecret({
+            cache: true,
+            rateLimit: true,
+            jwksRequestsPerMinute: 5,
+            jwksUri: 'https://tennisbuchs.eu.auth0.com/.well-known/jwks.json',
+        }),
+        audience: 'https://production.tennis-buchs.ch/api/v1/ping',
+        issuer: 'https://tennisbuchs.eu.auth0.com/',
+        algorithms: ['RS256'],
+    });
+} else if (process.env.NODE_ENV === 'staging') {
+    jwtCheck = jwt({
+        secret: jwks.expressJwtSecret({
+            cache: true,
+            rateLimit: true,
+            jwksRequestsPerMinute: 5,
+            jwksUri:
+                'https://tennisbuchs-staging.eu.auth0.com/.well-known/jwks.json',
+        }),
+        audience: 'https://staging.tennis-buchs.ch/api/v1/ping',
+        issuer: 'https://tennisbuchs-staging.eu.auth0.com/',
+        algorithms: ['RS256'],
+    });
+} else {
+    jwtCheck = jwt({
+        secret: jwks.expressJwtSecret({
+            cache: true,
+            rateLimit: true,
+            jwksRequestsPerMinute: 5,
+            jwksUri:
+                'https://tennisbuchs-integration.eu.auth0.com/.well-known/jwks.json',
+        }),
+        audience: 'http://localhost:5000/api/v1/ping',
+        issuer: 'https://tennisbuchs-integration.eu.auth0.com/',
+        algorithms: ['RS256'],
+    });
+}
+
+const secure = require('./routes/secure');
+app.use('/api/v1/', jwtCheck, secure);
 
 if (
     process.env.NODE_ENV === 'production' ||
@@ -87,11 +128,5 @@ if (
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
 }
-app.get('*', (req, res) => {
-    res.status(404).json({
-        error: 'Resource not found',
-        msg: 'Well, this is awkward',
-    });
-});
 
 app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));

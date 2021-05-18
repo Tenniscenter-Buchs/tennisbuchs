@@ -6,6 +6,7 @@ const controllers = require('../controllers/controllers');
  * @openapi
  * /ping:
  *   get:
+ *     summary: Returns "pong"
  *     description: Simple ping route to check whether the API is reachable
  *     responses:
  *       200:
