@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Trans } from 'react-i18next';
 import Blog from './portfolio/Blog.js';
 import Loader from './loader.js';
 
@@ -10,10 +12,21 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <Blog />
+                <Router>
+                    <Switch>
+                        <Route path="/profile">
+                            <Trans i18nKey="profile.editProfileHere">
+                                <p>Edit profile here</p>
+                            </Trans>
+                        </Route>
+                        <Route path="/">
+                            <Blog />
+                        </Route>
+                    </Switch>
+                </Router>
             </div>
         );
     }
 }
 
-export { App };
+export default App;

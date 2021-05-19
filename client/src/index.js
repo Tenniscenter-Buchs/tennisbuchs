@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
-import { App } from './app.js';
+import App from './app.js';
 import './i18n';
 
 var domain;
