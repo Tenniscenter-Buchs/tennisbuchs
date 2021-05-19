@@ -129,4 +129,4 @@ if (
     });
 }
 
-app.listen(port, () => console.log(`BACK_END_SERVICE_PORT: ${port}`));
+app.listen(port, () => console.log(`SERVICE PORT: ${port}`));

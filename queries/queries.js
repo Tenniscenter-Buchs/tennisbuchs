@@ -1,10 +1,13 @@
-const { Pool } = require('pg');
+const { Client } = require('pg');
 
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+const client = new Client({
+    connectionString:
+        process.env.NODE_ENV === 'production'
+            ? process.env.HEROKU_POSTGRESQL_BRONZE_URL
+            : process.env.DATABASE_URL,
     ssl: {
-        rejectUnauthorized: false
-    }
+        rejectUnauthorized: false,
+    },
 });
 
-// use pool.query() to run queries
+client.connect();
