@@ -15,8 +15,8 @@ class App extends Component {
                 <Router>
                     <Switch>
                         <Route path="/profile">
-                            <Trans i18nKey="profile.editProfileHere">
-                                <p>Edit profile here</p>
+                            <Trans i18nKey="profile.editProfile">
+                                <p>Edit profile</p>
                             </Trans>
                         </Route>
                         <Route path="/">

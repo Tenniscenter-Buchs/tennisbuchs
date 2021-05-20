@@ -17,12 +17,16 @@ if (process.env.REACT_APP_ENV === 'production') {
     clientId = '3zGKc7ZnJIfeq4gRQTYRyYcS9GhgqZN0';
 }
 
+export { domain };
+
 ReactDOM.render(
     <React.StrictMode>
         <Auth0Provider
             domain={domain}
             clientId={clientId}
             redirectUri={window.location.origin}
+            audience={'https://' + domain + '/api/v2/'}
+            scope="read:current_user update:current_user_metadata"
         >
             <Suspense fallback="loading">
                 <App />
