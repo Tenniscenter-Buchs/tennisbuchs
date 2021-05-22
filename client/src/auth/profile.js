@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import LoginButton from './login.js';
 import LogoutButton from './logout.js';
 import SignUp from './signup.js';
@@ -57,11 +57,10 @@ const Profile = () => {
                     <Trans i18nKey="profile.editProfile">Edit Profile</Trans>
                 </Button>
                 <LogoutButton variant="small" />
-                {userMetadata ? (
-                    <pre>{JSON.stringify(userMetadata, null, 2)}</pre>
-                ) : (
-                    'No user metadata defined'
-                )}
+                {!userMetadata ||
+                    (Object.keys(userMetadata).length === 0 && (
+                        <Redirect to="/profile" />
+                    ))}
             </>
         )) || <LoginButton variant="small" />
     );

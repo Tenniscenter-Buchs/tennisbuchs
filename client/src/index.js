@@ -25,7 +25,13 @@ ReactDOM.render(
             domain={domain}
             clientId={clientId}
             redirectUri={window.location.origin}
-            audience={'https://' + domain + '/api/v2/'}
+            audience={
+                'https://' +
+                (process.env.REACT_APP_ENV === 'production'
+                    ? 'tennisbuchs.eu.auth0.com'
+                    : domain) +
+                '/api/v2/'
+            }
             scope="read:current_user update:current_user_metadata"
         >
             <Suspense fallback="loading">
