@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import Blog from './portfolio/Blog.js';
 import Loader from './loader.js';
 
@@ -8,9 +8,15 @@ const App = () => {
 
     return (
         <div className="app">
-            <Router>
-                <Blog />
-            </Router>
+            {(window.cordova && (
+                <HashRouter>
+                    <Blog />
+                </HashRouter>
+            )) || (
+                <BrowserRouter>
+                    <Blog />
+                </BrowserRouter>
+            )}
         </div>
     );
 };

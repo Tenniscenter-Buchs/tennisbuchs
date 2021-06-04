@@ -5,16 +5,11 @@ import Button from '@material-ui/core/Button';
 import { Link, Redirect } from 'react-router-dom';
 import LoginButton from './login.js';
 import LogoutButton from './logout.js';
-import SignUp from './signup.js';
 import { domain } from '../index.js';
 
 const Profile = () => {
-    const {
-        user,
-        isAuthenticated,
-        isLoading,
-        getAccessTokenSilently,
-    } = useAuth0();
+    const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+        useAuth0();
     const [userMetadata, setUserMetadata] = useState(null);
 
     useEffect(() => {

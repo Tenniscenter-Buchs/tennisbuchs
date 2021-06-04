@@ -17,6 +17,8 @@ import post2 from './blog-post.2.md';
 import post3 from './blog-post.3.md';
 import { Route, Switch } from 'react-router-dom';
 import SignUp from '../auth/signup.js';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
@@ -93,6 +95,7 @@ const sidebar = {
 
 export default function Blog() {
     const classes = useStyles();
+    const { isAuthenticated, loginWithRedirect } = useAuth0();
 
     return (
         <React.Fragment>
@@ -101,8 +104,18 @@ export default function Blog() {
                 <Header title="Blog" sections={sections} />
                 <main>
                     <Switch>
+                        <Route path="/register">
+                            {!isAuthenticated && loginWithRedirect}
+                        </Route>
+                        <Route path="/login">
+                            {!isAuthenticated && loginWithRedirect}
+                        </Route>
                         <Route path="/profile">
-                            <SignUp />
+                            {isAuthenticated ? (
+                                <SignUp />
+                            ) : (
+                                <Redirect to="/login" />
+                            )}
                         </Route>
                         <Route path="/">
                             <MainFeaturedPost post={mainFeaturedPost} />

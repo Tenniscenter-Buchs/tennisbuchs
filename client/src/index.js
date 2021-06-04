@@ -19,25 +19,33 @@ if (process.env.REACT_APP_ENV === 'production') {
 
 export { domain };
 
-ReactDOM.render(
-    <React.StrictMode>
-        <Auth0Provider
-            domain={domain}
-            clientId={clientId}
-            redirectUri={window.location.origin}
-            audience={
-                'https://' +
-                (process.env.REACT_APP_ENV === 'production'
-                    ? 'tennisbuchs.eu.auth0.com'
-                    : domain) +
-                '/api/v2/'
-            }
-            scope="read:current_user update:current_user_metadata"
-        >
-            <Suspense fallback="loading">
-                <App />
-            </Suspense>
-        </Auth0Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+const startApp = () => {
+    ReactDOM.render(
+        <React.StrictMode>
+            <Auth0Provider
+                domain={domain}
+                clientId={clientId}
+                redirectUri={window.location.origin}
+                audience={
+                    'https://' +
+                    (process.env.REACT_APP_ENV === 'production'
+                        ? 'tennisbuchs.eu.auth0.com'
+                        : domain) +
+                    '/api/v2/'
+                }
+                scope="read:current_user update:current_user_metadata"
+            >
+                <Suspense fallback="loading">
+                    <App />
+                </Suspense>
+            </Auth0Provider>
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
+};
+
+if (!window.cordova) {
+    startApp();
+} else {
+    document.addEventListener('deviceready', startApp, false);
+}
