@@ -16,7 +16,7 @@ import post1 from './blog-post.1.md';
 import post2 from './blog-post.2.md';
 import post3 from './blog-post.3.md';
 import { Route, Switch } from 'react-router-dom';
-import SignUp from '../auth/signup.js';
+import ProfileEditor from '../auth/profile-editor.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Redirect } from 'react-router-dom';
 
@@ -101,7 +101,7 @@ export default function Blog() {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="lg">
-                <Header title="Blog" sections={sections} />
+                <Header title="Tenniscenter Buchs" sections={sections} />
                 <main>
                     <Switch>
                         <Route path="/register">
@@ -112,7 +112,7 @@ export default function Blog() {
                         </Route>
                         <Route path="/profile">
                             {isAuthenticated ? (
-                                <SignUp />
+                                <ProfileEditor />
                             ) : (
                                 <Redirect to="/login" />
                             )}

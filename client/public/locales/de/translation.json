@@ -1,5 +1,33 @@
 {
     "profile" : {
-        "editProfile": "Profil bearbeiten"
+        "editProfile": "Profil bearbeiten",
+        "editData": "Profil-Details bearbeiten",
+        "fields": {
+            "firstName": "Vorname",
+            "middleNames": "Mittlere Namen",
+            "lastName": "Nachname",
+            "email": "Email-Adresse",
+            "password": "Passwort",
+            "repeatPassword": "Passwort wiederholen",
+            "marketingEmails": "Ich möchte Neuigkeiten, Werbung und Updates via Email erhalten.",
+            "save": "Speichern",
+            "residenceAddressString": "Wohnadresse",
+            "billingAddressString": "Rechnungsadresse",
+            "address" : {
+                "street": "Strasse",
+                "number": "Hausnummer",
+                "postalCode": "Postleitzahl",
+                "city": "Gemeinde/Dorf/Stadt",
+                "province": "Kanton/Provinz/Bundesland",
+                "country": "Land",
+                "countries": {
+                    "ch": "Schweiz",
+                    "it": "Italien",
+                    "fr": "Frankreich",
+                    "en": "Grossbritannien"
+                }
+            },
+            "separateBillingAddress": "Rechnungsadresse unterscheidet sich von Wohnadresse"
+        }
     }
 }

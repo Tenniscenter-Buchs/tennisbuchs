@@ -1,5 +1,17 @@
 {
     "profile": {
-        "editProfile": "Edit profile"
+        "editProfile": "Edit profile",
+        "editData": "Edit profile details",
+        "fields": {
+            "firstName": "First Name",
+            "middleNames": "Middle Names",
+            "lastName": "Last Name",
+            "email": "Email Address",
+            "password": "Password",
+            "repeatPassword": "Repeat password",
+            "marketingEmails": "I wish to receive news, marketing promotions and updates via email.",
+            "save": "Save",
+            "residenceAddressString": "Residence Address"
+        }
     }
 }
