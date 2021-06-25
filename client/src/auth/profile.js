@@ -6,6 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import LoginButton from './login.js';
 import LogoutButton from './logout.js';
 import { domain } from '../index.js';
+import LanguageSelector from '../main/util/language-selector.js';
 
 const Profile = () => {
     const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
@@ -41,23 +42,29 @@ const Profile = () => {
     }, [getAccessTokenSilently, user]);
 
     if (isLoading) {
+        // TODO: translate
         return <div>Loading ...</div>;
     }
 
     return (
-        (isAuthenticated && (
-            <>
-                <p>{user.email}</p>
-                <Button component={Link} to="/profile" variant="small">
-                    <Trans i18nKey="profile.editProfile">Edit Profile</Trans>
-                </Button>
-                <LogoutButton variant="small" />
-                {!userMetadata ||
-                    (Object.keys(userMetadata).length === 0 && (
-                        <Redirect to="/profile" />
-                    ))}
-            </>
-        )) || <LoginButton variant="small" />
+        <>
+            {(isAuthenticated && (
+                <>
+                    <p>{user.email}</p>
+                    <Button component={Link} to="/profile" variant="small">
+                        <Trans i18nKey="profile.editProfile">
+                            Edit Profile
+                        </Trans>
+                    </Button>
+                    <LogoutButton variant="small" />
+                    {!userMetadata ||
+                        (Object.keys(userMetadata).length === 0 && (
+                            <Redirect to="/profile" />
+                        ))}
+                </>
+            )) || <LoginButton variant="small" />}
+            <LanguageSelector />
+        </>
     );
 };
 
