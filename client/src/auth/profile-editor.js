@@ -111,6 +111,10 @@ export default function ProfileEditor() {
 
     var [separateBillingAddress, setSeparateBillingAddress] = useState(false);
 
+    const submitUpdates = () => {
+        // TODO: Create an endpoint on the server-side, call the auth0 management api from there
+    };
+
     return (
         <Container component="main" maxWidth="sm">
             <CssBaseline />
@@ -240,6 +244,7 @@ export default function ProfileEditor() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={submitUpdates}
                     >
                         <Trans i18nKey="profile.save">Save</Trans>
                     </Button>
