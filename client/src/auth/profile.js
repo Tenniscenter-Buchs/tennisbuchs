@@ -92,6 +92,16 @@ const Profile = () => {
                                 </Trans>
                             </MenuItem>
                             <MenuItem
+                                component={Link}
+                                onClick={handleClose}
+                                to="/password"
+                                variant="small"
+                            >
+                                <Trans i18nKey="profile.changePassword">
+                                    Password ändern
+                                </Trans>
+                            </MenuItem>
+                            <MenuItem
                                 onClick={() => {
                                     Loader.engage();
                                     logout({

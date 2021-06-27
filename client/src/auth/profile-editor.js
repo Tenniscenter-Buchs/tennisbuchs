@@ -180,32 +180,6 @@ export default function ProfileEditor() {
                                 autoComplete="email"
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label={t('profile.fields.password', 'Password')}
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="repeatPassword"
-                                label={t(
-                                    'profile.fields.repeatPassword',
-                                    'Repeat password'
-                                )}
-                                type="password"
-                                id="repeatPassword"
-                            />
-                        </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={

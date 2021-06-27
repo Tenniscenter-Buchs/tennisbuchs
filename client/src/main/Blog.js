@@ -17,6 +17,7 @@ import post2 from './blog-post.2.md';
 import post3 from './blog-post.3.md';
 import { Route, Switch } from 'react-router-dom';
 import ProfileEditor from '../auth/profile-editor.js';
+import Password from '../auth/password.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Redirect } from 'react-router-dom';
 
@@ -104,6 +105,13 @@ export default function Blog() {
                 <Header title="Tenniscenter Buchs" sections={sections} />
                 <main>
                     <Switch>
+                        <Route path="/password">
+                            {isAuthenticated ? (
+                                <Password />
+                            ) : (
+                                <Redirect to="/login" />
+                            )}
+                        </Route>
                         <Route path="/register">
                             {!isAuthenticated && loginWithRedirect}
                         </Route>

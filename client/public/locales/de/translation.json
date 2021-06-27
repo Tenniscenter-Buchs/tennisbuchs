@@ -7,6 +7,8 @@
         "logout": "Ausloggen",
         "editProfile": "Profil bearbeiten",
         "editData": "Profil-Details bearbeiten",
+        "updatePassword": "Passwort aktualisieren",
+        "changePassword": "Passwort ändern",
         "fields": {
             "firstName": "Vorname",
             "middleNames": "Mittlere Namen",
