@@ -1,5 +1,10 @@
 {
     "profile" : {
+        "profileString": "Profil",
+        "language": "Sprache",
+        "loading": "Laden...",
+        "login": "Einloggen",
+        "logout": "Ausloggen",
         "editProfile": "Profil bearbeiten",
         "editData": "Profil-Details bearbeiten",
         "fields": {

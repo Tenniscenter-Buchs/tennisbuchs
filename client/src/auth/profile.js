@@ -4,14 +4,17 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
 import { Link, Redirect } from 'react-router-dom';
 import LoginButton from './login.js';
-import LogoutButton from './logout.js';
 import { domain } from '../index.js';
 import LanguageSelector from '../main/util/language-selector.js';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Loader from '../main/loader.js';
 
 const Profile = () => {
-    const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout } =
         useAuth0();
     const [userMetadata, setUserMetadata] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     useEffect(() => {
         const getUserMetadata = async () => {
@@ -42,21 +45,66 @@ const Profile = () => {
     }, [getAccessTokenSilently, user]);
 
     if (isLoading) {
-        // TODO: translate
-        return <div>Loading ...</div>;
+        return (
+            <div>
+                <Trans i18nKey="profile.loading">Loading...</Trans>
+            </div>
+        );
     }
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <>
             {(isAuthenticated && (
                 <>
-                    <p>{user.email}</p>
-                    <Button component={Link} to="/profile" variant="small">
-                        <Trans i18nKey="profile.editProfile">
-                            Edit Profile
-                        </Trans>
-                    </Button>
-                    <LogoutButton variant="small" />
+                    <div>
+                        <Button
+                            aria-controls="simple-menu"
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                        >
+                            <Trans i18nKey="profile.profileString">
+                                Profile
+                            </Trans>
+                        </Button>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem
+                                component={Link}
+                                onClick={handleClose}
+                                to="/profile"
+                                variant="small"
+                            >
+                                <Trans i18nKey="profile.editProfile">
+                                    Edit Profile
+                                </Trans>
+                            </MenuItem>
+                            <MenuItem
+                                onClick={() => {
+                                    Loader.engage();
+                                    logout({
+                                        returnTo: window.location.origin,
+                                    });
+                                    Loader.disengage();
+                                    handleClose();
+                                }}
+                            >
+                                <Trans i18nKey="profile.logout">Log Out</Trans>
+                            </MenuItem>
+                        </Menu>
+                    </div>
                     {!userMetadata ||
                         (Object.keys(userMetadata).length === 0 && (
                             <Redirect to="/profile" />

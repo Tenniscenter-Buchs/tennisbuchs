@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 const LanguageSelector = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const { i18n } = useTranslation();
 
@@ -25,19 +25,19 @@ const LanguageSelector = () => {
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-                Language
+                <Trans i18nKey="profile.language">Language</Trans>
             </Button>
             <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
+                onClose={() => setAnchorEl(null)}
             >
-                <MenuItem onClick={() => handleClose('de')}>German</MenuItem>
+                <MenuItem onClick={() => handleClose('de')}>Deutsch</MenuItem>
                 <MenuItem onClick={() => handleClose('en')}>English</MenuItem>
-                <MenuItem onClick={() => handleClose('fr')}>French</MenuItem>
-                <MenuItem onClick={() => handleClose('it')}>Italian</MenuItem>
+                <MenuItem onClick={() => handleClose('fr')}>Français</MenuItem>
+                <MenuItem onClick={() => handleClose('it')}>Italiano</MenuItem>
             </Menu>
         </div>
     );

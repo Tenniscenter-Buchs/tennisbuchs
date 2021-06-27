@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import Blog from './main/Blog.js';
 import Loader from './main/loader.js';
+import { withTranslation } from 'react-i18next';
 
 const App = () => {
     useEffect(() => Loader.disengage());
@@ -21,4 +22,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default withTranslation()(App);
