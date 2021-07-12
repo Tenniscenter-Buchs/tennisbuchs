@@ -7,6 +7,7 @@
         "logout": "Ausloggen",
         "editProfile": "Profil bearbeiten",
         "editData": "Profil-Details bearbeiten",
+        "save": "Speichern",
         "updatePassword": "Passwort aktualisieren",
         "changePassword": "Passwort ändern",
         "fields": {
@@ -17,7 +18,6 @@
             "password": "Passwort",
             "repeatPassword": "Passwort wiederholen",
             "marketingEmails": "Ich möchte Neuigkeiten, Werbung und Updates via Email erhalten.",
-            "save": "Speichern",
             "residenceAddressString": "Wohnadresse",
             "billingAddressString": "Rechnungsadresse",
             "address" : {

@@ -2,7 +2,9 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import App from './app.js';
+import { base } from './api.js';
 import './i18n.js';
+import Loader from './main/loader.js';
 
 var domain;
 var clientId;
@@ -26,16 +28,10 @@ const startApp = () => {
                 domain={domain}
                 clientId={clientId}
                 redirectUri={window.location.origin}
-                audience={
-                    'https://' +
-                    (process.env.REACT_APP_ENV === 'production'
-                        ? 'tennisbuchs.eu.auth0.com'
-                        : domain) +
-                    '/api/v2/'
-                }
+                audience={base + '/'}
                 scope="read:current_user update:current_user_metadata"
             >
-                <Suspense fallback="loading">
+                <Suspense fallback={Loader}>
                     <App />
                 </Suspense>
             </Auth0Provider>

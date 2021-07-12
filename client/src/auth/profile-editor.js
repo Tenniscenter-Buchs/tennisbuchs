@@ -12,6 +12,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Trans, useTranslation } from 'react-i18next';
 import CountrySelect from '../main/util/country-select.js';
+import PhoneField from '../main/util/phone-field.js';
+import api from '../api.js';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -111,8 +113,9 @@ export default function ProfileEditor() {
 
     var [separateBillingAddress, setSeparateBillingAddress] = useState(false);
 
-    const submitUpdates = () => {
-        // TODO: Create an endpoint on the server-side, call the auth0 management api from there
+    const submitUpdates = async () => {
+        const res = await api.patch('/user/metadata');
+        console.log(res);
     };
 
     return (
@@ -183,6 +186,9 @@ export default function ProfileEditor() {
                                 name="email"
                                 autoComplete="email"
                             />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <PhoneField variant="outlined" classes={classes} />
                         </Grid>
                         <Grid item xs={12}>
                             <FormControlLabel

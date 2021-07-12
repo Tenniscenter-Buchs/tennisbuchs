@@ -10,6 +10,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Loader from '../main/loader.js';
 
+var accessToken;
+export { accessToken };
+
+var managementToken;
+export { managementToken };
+
 const Profile = () => {
     const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout } =
         useAuth0();
@@ -19,22 +25,26 @@ const Profile = () => {
     useEffect(() => {
         const getUserMetadata = async () => {
             try {
-                const accessToken = await getAccessTokenSilently({
+                const aToken = await getAccessTokenSilently();
+                accessToken = aToken;
+
+                const mToken = await getAccessTokenSilently({
                     audience: `https://${domain}/api/v2/`,
                     scope: 'read:current_user',
                 });
+                managementToken = mToken;
 
                 const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
 
+                console.log(userDetailsByIdUrl);
+
                 const metadataResponse = await fetch(userDetailsByIdUrl, {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`,
+                        Authorization: `Bearer ${managementToken}`,
                     },
                 });
 
                 const { user_metadata } = await metadataResponse.json();
-
-                console.log('Metadata: ' + JSON.stringify(user_metadata));
                 setUserMetadata(user_metadata);
             } catch (e) {
                 console.log(e.message);
@@ -115,10 +125,6 @@ const Profile = () => {
                             </MenuItem>
                         </Menu>
                     </div>
-                    {!userMetadata ||
-                        (Object.keys(userMetadata).length === 0 && (
-                            <Redirect to="/profile" />
-                        ))}
                 </>
             )) || <LoginButton variant="small" />}
             <LanguageSelector />

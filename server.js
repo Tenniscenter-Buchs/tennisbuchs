@@ -83,7 +83,7 @@ if (process.env.NODE_ENV === 'production') {
             jwksRequestsPerMinute: 5,
             jwksUri: 'https://tennisbuchs.eu.auth0.com/.well-known/jwks.json',
         }),
-        audience: 'https://production.tennis-buchs.ch/api/v1/ping',
+        audience: 'https://production.tennis-buchs.ch/api/v1/',
         issuer: 'https://tennisbuchs.eu.auth0.com/',
         algorithms: ['RS256'],
     });
@@ -96,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
             jwksUri:
                 'https://tennisbuchs-staging.eu.auth0.com/.well-known/jwks.json',
         }),
-        audience: 'https://staging.tennis-buchs.ch/api/v1/ping',
+        audience: 'https://staging.tennis-buchs.ch/api/v1/',
         issuer: 'https://tennisbuchs-staging.eu.auth0.com/',
         algorithms: ['RS256'],
     });
@@ -109,7 +109,7 @@ if (process.env.NODE_ENV === 'production') {
             jwksUri:
                 'https://tennisbuchs-integration.eu.auth0.com/.well-known/jwks.json',
         }),
-        audience: 'http://localhost:5000/api/v1/ping',
+        audience: 'http://localhost:5000/api/v1/',
         issuer: 'https://tennisbuchs-integration.eu.auth0.com/',
         algorithms: ['RS256'],
     });
