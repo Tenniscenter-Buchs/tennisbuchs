@@ -63,9 +63,9 @@ const Profile = () => {
     };
 
     return (
-        <>
+        <React.Fragment>
             {(isAuthenticated && (
-                <>
+                <React.Fragment>
                     <div>
                         <Button
                             aria-controls="simple-menu"
@@ -119,10 +119,10 @@ const Profile = () => {
                             </MenuItem>
                         </Menu>
                     </div>
-                </>
+                </React.Fragment>
             )) || <LoginButton variant="small" />}
             <LanguageSelector />
-        </>
+        </React.Fragment>
     );
 };
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 import Loader from './main/loader.js';
 
@@ -22,13 +23,21 @@ api.interceptors.request.use((req) => {
     }
     return req;
 });
+
+var ErrorContext = {
+    callback: () => {},
+};
+export { ErrorContext };
+
 api.interceptors.response.use(
     (res) => {
         Loader.disengage();
+        ErrorContext.callback(true, res.status, '');
         return res;
     },
     (res) => {
         Loader.disengage();
+        ErrorContext.callback(true, res.status, res.message);
         return res;
     }
 );

@@ -20,6 +20,7 @@ import ProfileEditor from '../auth/profile-editor.js';
 import Password from '../auth/password.js';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Redirect } from 'react-router-dom';
+import ErrorHandler from './util/error-handler.js';
 
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
@@ -151,6 +152,7 @@ export default function Blog() {
                         </Route>
                     </Switch>
                 </main>
+                <ErrorHandler />
             </Container>
             <Footer
                 title="Footer"

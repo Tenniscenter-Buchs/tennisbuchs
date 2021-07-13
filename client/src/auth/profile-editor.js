@@ -10,8 +10,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import { Trans, useTranslation } from 'react-i18next';
 import CountrySelect from '../main/util/country-select.js';
 import PhoneField from '../main/util/phone-field.js';
@@ -36,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 function Address(props) {
     const { t } = useTranslation();
@@ -118,38 +112,10 @@ export default function ProfileEditor() {
     const { t } = useTranslation();
 
     var [separateBillingAddress, setSeparateBillingAddress] = useState(false);
-    var [open, setOpen] = useState(false);
-    var [returnCode, setReturnCode] = useState(200);
-    var [errorMsg, setErrorMsg] = useState('');
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpen(false);
-    };
-
-    const submitUpdates = () => {
+    const submitUpdates = async () => {
         // TODO: this logic should be handled by interceptors to prevent code duplication
-        api.post('/user/metadata')
-            .then((response) => {
-                console.log(JSON.stringify(response));
-                setReturnCode(response.status);
-            })
-            .catch(function (error) {
-                console.log(JSON.stringify(error));
-                if (error.response) {
-                    setReturnCode(error.response.status);
-                    setErrorMsg(error.response.data);
-                } else {
-                    setReturnCode(500);
-                    setErrorMsg('Network: API unreachable');
-                }
-            })
-            .then(function () {
-                setOpen(true);
-            });
+        await api.post('/user/metadata');
     };
 
     return (
@@ -272,7 +238,7 @@ export default function ProfileEditor() {
                             />
                         </Grid>
                         {separateBillingAddress && (
-                            <>
+                            <React.Fragment>
                                 <Grid item xs={12}>
                                     <Typography component="h4" variant="h5">
                                         <Trans i18nKey="profile.fields.billingAddressString">
@@ -281,7 +247,7 @@ export default function ProfileEditor() {
                                     </Typography>
                                 </Grid>
                                 <Address prefix="billingAddress" />
-                            </>
+                            </React.Fragment>
                         )}
                     </Grid>
                     <Button
@@ -294,34 +260,6 @@ export default function ProfileEditor() {
                     >
                         <Trans i18nKey="profile.save">Save</Trans>
                     </Button>
-                    <Snackbar
-                        open={open}
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                    >
-                        <Alert
-                            onClose={handleClose}
-                            severity={returnCode === 200 ? 'success' : 'error'}
-                        >
-                            <>
-                                {returnCode + ' - '}
-                                {returnCode !== 200 ? (
-                                    <>
-                                        <Trans i18nKey="profile.error">
-                                            Error
-                                        </Trans>
-                                        {' - ' + errorMsg}
-                                    </>
-                                ) : (
-                                    <>
-                                        <Trans i18nKey="profile.savedChanges">
-                                            Saved changes
-                                        </Trans>
-                                    </>
-                                )}
-                            </>
-                        </Alert>
-                    </Snackbar>
                 </form>
             </div>
         </Container>
