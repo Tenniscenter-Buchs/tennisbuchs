@@ -10,12 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Loader from '../main/loader.js';
 
-var accessToken;
-export { accessToken };
-
-var managementToken;
-export { managementToken };
-
 const Profile = () => {
     const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout } =
         useAuth0();
@@ -26,21 +20,19 @@ const Profile = () => {
         const getUserMetadata = async () => {
             try {
                 const aToken = await getAccessTokenSilently();
-                accessToken = aToken;
+                localStorage.setItem('accessToken', aToken);
 
                 const mToken = await getAccessTokenSilently({
                     audience: `https://${domain}/api/v2/`,
                     scope: 'read:current_user',
                 });
-                managementToken = mToken;
+                localStorage.setItem('managementToken', mToken);
 
                 const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
 
-                console.log(userDetailsByIdUrl);
-
                 const metadataResponse = await fetch(userDetailsByIdUrl, {
                     headers: {
-                        Authorization: `Bearer ${managementToken}`,
+                        Authorization: `Bearer ${mToken}`,
                     },
                 });
 
@@ -108,12 +100,14 @@ const Profile = () => {
                                 variant="small"
                             >
                                 <Trans i18nKey="profile.changePassword">
-                                    Password ändern
+                                    Change password
                                 </Trans>
                             </MenuItem>
                             <MenuItem
                                 onClick={() => {
                                     Loader.engage();
+                                    localStorage.removeItem('accessToken');
+                                    localStorage.removeItem('managementToken');
                                     logout({
                                         returnTo: window.location.origin,
                                     });

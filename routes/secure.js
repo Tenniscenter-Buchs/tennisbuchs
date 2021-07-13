@@ -24,7 +24,7 @@ router.get('/pong', controllers.pong);
 /**
  * @openapi
  * /user/metadata:
- *   patch:
+ *   post:
  *     summary: Updates user metadata
  *     parameters:
  *       - in: header
@@ -55,6 +55,6 @@ router.get('/pong', controllers.pong);
  *           example: "info@example.com"
  *           type: string
  */
-router.patch('/user/metadata', controllers.updateUserMetadata);
+router.post('/user/metadata', controllers.updateUserMetadata);
 
 module.exports = router;

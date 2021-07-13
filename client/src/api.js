@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Loader from './main/loader.js';
-import { accessToken } from './auth/profile.js';
 
 const base =
     process.env.REACT_APP_ENV === 'production'
@@ -15,15 +14,23 @@ const api = axios.create({
     baseURL: base,
 });
 
-api.interceptors.request.use(function (config) {
+api.interceptors.request.use((req) => {
     Loader.engage();
-    if (accessToken) {
-        config.headers.Authorization = 'Bearer ' + accessToken;
+    if (localStorage.getItem('accessToken')) {
+        req.headers.Authorization =
+            'Bearer ' + localStorage.getItem('accessToken');
     }
-    return config;
+    return req;
 });
-api.interceptors.response.use(function () {
-    Loader.disengage();
-});
+api.interceptors.response.use(
+    (res) => {
+        Loader.disengage();
+        return res;
+    },
+    (res) => {
+        Loader.disengage();
+        return res;
+    }
+);
 
 export default api;

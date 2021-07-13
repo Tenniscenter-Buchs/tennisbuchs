@@ -8,9 +8,7 @@ const pong = (req, res, next) => {
 
 const updateUserMetadata = (req, res, next) => {
     // TODO: handle rate limits imposed by the management API
-    console.log('Request received');
-    console.log(req.get('Authorization'));
-    res.status(200).send(req.get('Authorization'));
+    res.status(500).send();
 };
 
 module.exports.ping = ping;
