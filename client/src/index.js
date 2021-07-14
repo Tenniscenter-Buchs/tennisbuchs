@@ -32,7 +32,7 @@ const startApp = () => {
                 audience={base + '/'}
                 scope="read:current_user update:current_user_metadata"
             >
-                <Suspense fallback={Loader}>
+                <Suspense fallback={'loading'}>
                     <ErrorHandler component={<App />} />
                 </Suspense>
             </Auth0Provider>

@@ -36,5 +36,13 @@
             },
             "separateBillingAddress": "Rechnungsadresse unterscheidet sich von Wohnadresse"
         }
-    }
+    },
+    "success": "Erfolg",
+    "error": "Fehler",
+    "notOnline": "Keine Netzwerkverbindung, Sie sind nicht online",
+    "backOnline": "Sie sind wieder online",
+    "dismiss": "Verwerfen",
+    "ok": "Okay",
+    "errorDetails": "Fehler-Details",
+    "copyToClipboard": "Kopieren"
 }

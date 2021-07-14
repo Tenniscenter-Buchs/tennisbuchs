@@ -116,7 +116,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const secure = require('./routes/secure');
-app.use('/api/v1/', jwtCheck, secure);
+app.use('/api/v1/secure/', jwtCheck, secure);
 
 if (
     process.env.NODE_ENV === 'production' ||

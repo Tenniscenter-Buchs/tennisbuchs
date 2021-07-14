@@ -114,8 +114,11 @@ export default function ProfileEditor() {
     var [separateBillingAddress, setSeparateBillingAddress] = useState(false);
 
     const submitUpdates = async () => {
-        // TODO: this logic should be handled by interceptors to prevent code duplication
-        await api.post('/user/metadata');
+        await api.post('/secure/user/metadata', {
+            headers: {
+                'X-Management-Token': localStorage.getItem('managementToken'),
+            },
+        });
     };
 
     return (

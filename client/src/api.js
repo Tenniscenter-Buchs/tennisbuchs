@@ -31,12 +31,12 @@ export { ErrorContext };
 api.interceptors.response.use(
     (res) => {
         Loader.disengage();
-        ErrorContext.callback(res.status, '');
+        ErrorContext.callback(res.status, '', '');
         return res;
     },
     (res) => {
         Loader.disengage();
-        ErrorContext.callback(res.status, res.message);
+        ErrorContext.callback(res.status, res.message, JSON.stringify(res));
         return res;
     }
 );
