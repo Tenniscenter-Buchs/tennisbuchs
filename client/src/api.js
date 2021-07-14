@@ -20,6 +20,13 @@ api.interceptors.request.use((req) => {
         req.headers.Authorization =
             'Bearer ' + localStorage.getItem('accessToken');
     }
+    if (localStorage.getItem('managementToken')) {
+        req.headers = {
+            ...req.headers,
+            'X-Management-Token':
+                'Bearer ' + localStorage.getItem('managementToken'),
+        };
+    }
     return req;
 });
 

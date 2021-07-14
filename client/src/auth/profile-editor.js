@@ -114,11 +114,7 @@ export default function ProfileEditor() {
     var [separateBillingAddress, setSeparateBillingAddress] = useState(false);
 
     const submitUpdates = async () => {
-        await api.post('/secure/user/metadata', {
-            headers: {
-                'X-Management-Token': localStorage.getItem('managementToken'),
-            },
-        });
+        await api.post('/secure/user/metadata');
     };
 
     return (
