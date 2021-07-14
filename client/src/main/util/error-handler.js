@@ -81,13 +81,19 @@ function Snackbar(props) {
     useEffect(() => {
         if (!firstLoad && isOnline) {
             closeSnackbar();
-            enqueueSnackbar(t('backOnline', 'You are back online'), {
-                variant: 'success',
-                action,
-            });
+            enqueueSnackbar(
+                t('backOnline', 'Connection to the API reestablished'),
+                {
+                    variant: 'success',
+                    action,
+                }
+            );
         } else if (!firstLoad) {
             enqueueSnackbar(
-                t('notOnline', 'No network connection, you are offline'),
+                t(
+                    'notOnline',
+                    'No connection to the API, either the service is down or you have lost the network connection'
+                ),
                 { variant: 'warning', persist: true, action }
             );
         } else {

@@ -17,10 +17,8 @@ const checkOnlineStatus = async () => {
     const controller = new AbortController();
     const { signal } = controller;
 
-    // If the browser has no network connection return offline
     if (!navigator.onLine) return navigator.onLine;
 
-    //
     try {
         await timeout(
             TIMEOUT_TIME_MS,
@@ -31,11 +29,8 @@ const checkOnlineStatus = async () => {
         );
         return true;
     } catch (error) {
-        // Error Log
         console.error(error);
 
-        // This can be because of request timed out
-        // so we abort the request for any case
         controller.abort();
     }
     return false;
@@ -56,7 +51,6 @@ export const OnlineStatusProvider = ({ children }) => {
             setOnlineStatus(false);
         });
 
-        // Add polling incase of slow connection
         const id = setInterval(() => {
             checkStatus();
         }, onlinePollingInterval);
