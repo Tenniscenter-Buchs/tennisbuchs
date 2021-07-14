@@ -17,6 +17,7 @@
         "i18next-http-backend": "^1.2.4",
         "markdown-to-jsx": "^7.1.2",
         "material-ui": "^0.20.2",
+        "notistack": "^1.0.9",
         "prop-types": "^15.7.2",
         "react": "^16.14.0",
         "react-custom-scroll": "^4.3.0",

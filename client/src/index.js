@@ -5,6 +5,7 @@ import App from './app.js';
 import { base } from './api.js';
 import './i18n.js';
 import Loader from './main/loader.js';
+import ErrorHandler from './main/util/error-handler.js';
 
 var domain;
 var clientId;
@@ -32,7 +33,7 @@ const startApp = () => {
                 scope="read:current_user update:current_user_metadata"
             >
                 <Suspense fallback={Loader}>
-                    <App />
+                    <ErrorHandler component={<App />} />
                 </Suspense>
             </Auth0Provider>
         </React.StrictMode>,

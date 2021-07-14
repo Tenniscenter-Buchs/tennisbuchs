@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LoginButton from './login.js';
 import { domain } from '../index.js';
 import LanguageSelector from '../main/util/language-selector.js';
