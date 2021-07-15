@@ -38,6 +38,22 @@ const useStyles = makeStyles((theme) => ({
 function Address(props) {
     const { t } = useTranslation();
 
+    const [address, setAddress] = useState({
+        street: '',
+        number: null,
+        postalCode: null,
+        city: '',
+        province: '',
+        country: '',
+    });
+
+    const onChange = props.onChange;
+
+    const updateAddress = (addr) => {
+        setAddress(addr);
+        onChange(addr);
+    };
+
     const streetId = props.prefix + 'Street';
     const numberId = props.prefix + 'Number';
     const postalCodeId = props.prefix + 'PostalCode';
@@ -54,6 +70,12 @@ function Address(props) {
                     label={t('profile.fields.address.street', 'Street')}
                     name={streetId}
                     id={streetId}
+                    onChange={function (event) {
+                        updateAddress({
+                            ...address,
+                            street: event.target.value,
+                        });
+                    }}
                 />
             </Grid>
             <Grid item xs={3}>
@@ -64,6 +86,12 @@ function Address(props) {
                     label={t('profile.fields.address.number', 'Number')}
                     name={numberId}
                     id={numberId}
+                    onChange={function (event) {
+                        updateAddress({
+                            ...address,
+                            number: event.target.value,
+                        });
+                    }}
                 />
             </Grid>
             <Grid item xs={4}>
@@ -77,6 +105,12 @@ function Address(props) {
                     )}
                     name={postalCodeId}
                     id={postalCodeId}
+                    onChange={function (event) {
+                        updateAddress({
+                            ...address,
+                            postalCode: event.target.value,
+                        });
+                    }}
                 />
             </Grid>
             <Grid item xs={8}>
@@ -87,6 +121,9 @@ function Address(props) {
                     label={t('profile.fields.address.city', 'City')}
                     name={cityId}
                     id={cityId}
+                    onChange={function (event) {
+                        updateAddress({ ...address, city: event.target.value });
+                    }}
                 />
             </Grid>
             <Grid item xs={8}>
@@ -97,10 +134,24 @@ function Address(props) {
                     label={t('profile.fields.address.province', 'Province')}
                     name={provinceId}
                     id={provinceId}
+                    onChange={function (event) {
+                        updateAddress({
+                            ...address,
+                            province: event.target.value,
+                        });
+                    }}
                 />
             </Grid>
             <Grid item xs={4}>
-                <CountrySelect prefix={props.prefix} />
+                <CountrySelect
+                    prefix={props.prefix}
+                    onChange={function (event, value) {
+                        updateAddress({
+                            ...address,
+                            country: value != null ? value.code : null,
+                        });
+                    }}
+                />
             </Grid>
         </Grid>
     );
@@ -111,10 +162,19 @@ export default function ProfileEditor() {
 
     const { t } = useTranslation();
 
-    var [separateBillingAddress, setSeparateBillingAddress] = useState(false);
+    var [formData, setFormData] = useState({
+        firstName: '',
+        middleNames: '',
+        lastName: '',
+        email: '',
+        allowExtraEmails: false,
+        residenceAddress: {},
+        separateBillingAddress: false,
+        billingAddress: {},
+    });
 
     const submitUpdates = async () => {
-        await api.post('/secure/user/metadata');
+        await api.post('/secure/user/metadata', formData);
     };
 
     return (
@@ -150,6 +210,12 @@ export default function ProfileEditor() {
                                     'First Name'
                                 )}
                                 autoFocus
+                                onChange={function (event) {
+                                    setFormData({
+                                        ...formData,
+                                        firstName: event.target.value,
+                                    });
+                                }}
                             />
                         </Grid>
                         <Grid item xs={4}>
@@ -162,6 +228,12 @@ export default function ProfileEditor() {
                                     'Middle Names'
                                 )}
                                 name="middleNames"
+                                onChange={function (event) {
+                                    setFormData({
+                                        ...formData,
+                                        middleNames: event.target.value,
+                                    });
+                                }}
                             />
                         </Grid>
                         <Grid item xs={4}>
@@ -176,6 +248,12 @@ export default function ProfileEditor() {
                                 )}
                                 name="lastName"
                                 autoComplete="lname"
+                                onChange={function (event) {
+                                    setFormData({
+                                        ...formData,
+                                        lastName: event.target.value,
+                                    });
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -190,6 +268,12 @@ export default function ProfileEditor() {
                                 )}
                                 name="email"
                                 autoComplete="email"
+                                onChange={function (event) {
+                                    setFormData({
+                                        ...formData,
+                                        email: event.target.value,
+                                    });
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -201,6 +285,14 @@ export default function ProfileEditor() {
                                     <Checkbox
                                         value="allowExtraEmails"
                                         color="primary"
+                                        onChange={function (event) {
+                                            console.log(event);
+                                            setFormData({
+                                                ...formData,
+                                                allowExtraEmails:
+                                                    event.target.checked,
+                                            });
+                                        }}
                                     />
                                 }
                                 label={t(
@@ -216,7 +308,15 @@ export default function ProfileEditor() {
                                 </Trans>
                             </Typography>
                         </Grid>
-                        <Address prefix="residenceAddress" />
+                        <Address
+                            prefix="residenceAddress"
+                            onChange={function (addr) {
+                                setFormData({
+                                    ...formData,
+                                    residenceAddress: addr,
+                                });
+                            }}
+                        />
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={
@@ -230,13 +330,15 @@ export default function ProfileEditor() {
                                     'Billing address differs from residence address'
                                 )}
                                 onChange={function (event) {
-                                    setSeparateBillingAddress(
-                                        !separateBillingAddress
-                                    );
+                                    setFormData({
+                                        ...formData,
+                                        separateBillingAddress:
+                                            !formData.separateBillingAddress,
+                                    });
                                 }}
                             />
                         </Grid>
-                        {separateBillingAddress && (
+                        {formData.separateBillingAddress && (
                             <React.Fragment>
                                 <Grid item xs={12}>
                                     <Typography component="h4" variant="h5">
@@ -245,7 +347,15 @@ export default function ProfileEditor() {
                                         </Trans>
                                     </Typography>
                                 </Grid>
-                                <Address prefix="billingAddress" />
+                                <Address
+                                    prefix="billingAddress"
+                                    onChange={function (addr) {
+                                        setFormData({
+                                            ...formData,
+                                            billingAddress: addr,
+                                        });
+                                    }}
+                                />
                             </React.Fragment>
                         )}
                     </Grid>

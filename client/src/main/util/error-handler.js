@@ -28,6 +28,7 @@ function ErrorDetails(props) {
             </Button>
             <CustomDialog
                 det={props.det}
+                res={props.res}
                 open={open}
                 setOpen={setOpen}
                 k={props.k}
@@ -44,6 +45,7 @@ function Snackbar(props) {
 
     const [firstLoad, setFirstLoad] = useState(true);
     const [detMap, setDetMap] = useState(new Map());
+    const [resMap, setResMap] = useState(new Map());
     const [snackCount, setSnackCount] = useState(0);
 
     const action = (key) => (
@@ -58,10 +60,15 @@ function Snackbar(props) {
         </React.Fragment>
     );
     const errorAction = (k) => (
-        <ErrorDetails k={k} det={detMap.get(k)} closeSnackbar={closeSnackbar} />
+        <ErrorDetails
+            k={k}
+            det={detMap.get(k)}
+            res={resMap.get(k)}
+            closeSnackbar={closeSnackbar}
+        />
     );
 
-    ErrorContext.callback = (rc, msg, det) => {
+    ErrorContext.callback = (rc, msg, det, res) => {
         if (rc >= 200 && rc < 300) {
             enqueueSnackbar(t('success', 'Success'), {
                 variant: 'success',
@@ -69,8 +76,10 @@ function Snackbar(props) {
             });
         } else {
             setDetMap(new Map(detMap.set(snackCount.toString(), det)));
+            setResMap(new Map(resMap.set(snackCount.toString(), res)));
             enqueueSnackbar(t('error', 'Error') + ' - ' + msg, {
                 variant: 'error',
+                persist: true,
                 action: errorAction,
                 key: snackCount.toString(),
             });

@@ -29,7 +29,9 @@ export default function CustomDialog(props) {
         }
     }, [props.open]);
     const copy = () => {
-        navigator.clipboard.writeText(props.det);
+        navigator.clipboard.writeText(
+            'Error:\n' + props.det + '\nResponse:\n' + props.res
+        );
     };
 
     const classes = useStyles();
@@ -54,6 +56,14 @@ export default function CustomDialog(props) {
                         classes={{ root: classes.root }}
                     >
                         {props.det}
+                    </DialogContentText>
+                    <DialogContentText
+                        id="scroll-dialog-description"
+                        ref={descriptionElementRef}
+                        tabIndex={-1}
+                        classes={{ root: classes.root }}
+                    >
+                        {props.res}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

@@ -38,7 +38,7 @@ export { ErrorContext };
 api.interceptors.response.use(
     (res) => {
         Loader.disengage();
-        ErrorContext.callback(res.status, '', '');
+        ErrorContext.callback(res.status, '', '', '');
         return res;
     },
     (error) => {
@@ -46,6 +46,7 @@ api.interceptors.response.use(
         ErrorContext.callback(
             error.response.status,
             error.response.data ? error.response.data : error.message,
+            JSON.stringify(error),
             JSON.stringify(error.response)
         );
         return Promise.reject(error);
