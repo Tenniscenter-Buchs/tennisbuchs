@@ -37,7 +37,11 @@ const Profile = () => {
                 localStorage.setItem('accessToken', aToken);
 
                 const mToken = await getAccessTokenSilently({
-                    audience: `https://${domain}/api/v2/`,
+                    audience:
+                        'https://' +
+                        (process.env.REACT_APP_MANAGEMENT_URL ||
+                            'tennisbuchs-integration.eu.auth0.com') +
+                        '/api/v2/',
                     scope: 'read:current_user update:current_user_metadata',
                 });
                 localStorage.setItem('managementToken', mToken);

@@ -180,6 +180,7 @@ export default function ProfileEditor() {
             })
             .catch((error) => {
                 // TODO: handle error display
+                return Promise.reject(error);
             });
     };
 

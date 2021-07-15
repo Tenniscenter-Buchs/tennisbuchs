@@ -4,23 +4,13 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import App from './app.js';
 import { base } from './api.js';
 import './i18n.js';
-import Loader from './main/loader.js';
 import ErrorHandler from './main/util/error-handler.js';
 
-var domain;
-var clientId;
-if (process.env.REACT_APP_ENV === 'production') {
-    domain = 'auth.tennis-buchs.ch';
-    clientId = 'Hm8Yqdipa8Dj0vHUvuvk58f1HQxP41y9';
-} else if (process.env.REACT_APP_ENV === 'staging') {
-    domain = 'tennisbuchs-staging.eu.auth0.com';
-    clientId = 'VKhMeAhaiFk13cBtKa3vlXJzdiD00YrE';
-} else {
-    domain = 'tennisbuchs-integration.eu.auth0.com';
-    clientId = '3zGKc7ZnJIfeq4gRQTYRyYcS9GhgqZN0';
-}
-
-export { domain };
+export const domain =
+    process.env.REACT_APP_MANAGEMENT_URL ||
+    'tennisbuchs-integration.eu.auth0.com';
+const clientId =
+    process.env.REACT_APP_CLIENT_ID || '3zGKc7ZnJIfeq4gRQTYRyYcS9GhgqZN0';
 
 const startApp = () => {
     ReactDOM.render(
