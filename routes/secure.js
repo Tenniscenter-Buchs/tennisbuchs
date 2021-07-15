@@ -95,6 +95,6 @@ router.post('/user/metadata', controllers.updateUserMetadata);
  *           example: "info@example.com"
  *           type: string
  */
-router.post('/user/validate-metadata', controllers.updateUserMetadata);
+router.post('/user/validate-metadata', controllers.validateUserMetadata);
 
 module.exports = router;

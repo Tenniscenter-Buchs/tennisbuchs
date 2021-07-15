@@ -12,6 +12,8 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
+app.set('trust proxy', 1);
+
 if (
     process.env.NODE_ENV === 'production' ||
     process.env.NODE_ENV === 'staging'
@@ -81,46 +83,22 @@ const limiter = rateLimit({
 const pub = require('./routes/public');
 app.use('/api/v1/', limiter, pub);
 
-var jwtCheck;
-if (process.env.NODE_ENV === 'production') {
-    jwtCheck = jwt({
-        secret: jwks.expressJwtSecret({
-            cache: true,
-            rateLimit: true,
-            jwksRequestsPerMinute: 5,
-            jwksUri: 'https://tennisbuchs.eu.auth0.com/.well-known/jwks.json',
-        }),
-        audience: 'https://production.tennis-buchs.ch/api/v1/',
-        issuer: 'https://tennisbuchs.eu.auth0.com/',
-        algorithms: ['RS256'],
-    });
-} else if (process.env.NODE_ENV === 'staging') {
-    jwtCheck = jwt({
-        secret: jwks.expressJwtSecret({
-            cache: true,
-            rateLimit: true,
-            jwksRequestsPerMinute: 5,
-            jwksUri:
-                'https://tennisbuchs-staging.eu.auth0.com/.well-known/jwks.json',
-        }),
-        audience: 'https://staging.tennis-buchs.ch/api/v1/',
-        issuer: 'https://tennisbuchs-staging.eu.auth0.com/',
-        algorithms: ['RS256'],
-    });
-} else {
-    jwtCheck = jwt({
-        secret: jwks.expressJwtSecret({
-            cache: true,
-            rateLimit: true,
-            jwksRequestsPerMinute: 5,
-            jwksUri:
-                'https://tennisbuchs-integration.eu.auth0.com/.well-known/jwks.json',
-        }),
-        audience: 'http://localhost:5000/api/v1/',
-        issuer: 'https://tennisbuchs-integration.eu.auth0.com/',
-        algorithms: ['RS256'],
-    });
-}
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri:
+            (process.env.MANAGEMENT_URL ||
+                'https://tennisbuchs-integration.eu.auth0.com') +
+            '/.well-known/jwks.json',
+    }),
+    audience: process.env.AUDIENCE || 'http://localhost:5000/api/v1/',
+    issuer:
+        (process.env.MANAGEMENT_URL ||
+            'https://tennisbuchs-integration.eu.auth0.com') + '/',
+    algorithms: ['RS256'],
+});
 
 const secure = require('./routes/secure');
 app.use('/api/v1/secure/', limiter, jwtCheck, secure);

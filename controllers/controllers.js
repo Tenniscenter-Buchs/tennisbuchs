@@ -20,15 +20,22 @@ const updateUserMetadata = async (req, res, next) => {
         res.status(401).send('No X-Management-Token header found');
         return;
     }
-    const managementResponse = await axios.patch(
-        'https://tennisbuchs-integration.eu.auth0.com/api/v2/users/' +
-            jwt_decode(managementToken).sub,
-        { user_metadata: { ...req.body } },
-        {
-            headers: { Authorization: managementToken },
-        }
-    );
-    res.status(managementResponse.status).send(managementResponse.body);
+    try {
+        const managementResponse = await axios.patch(
+            (process.env.MANAGEMENT_URL ||
+                'https://tennisbuchs-integration.eu.auth0.com') +
+                '/api/v2/users/' +
+                jwt_decode(managementToken).sub,
+            { user_metadata: { ...req.body } },
+            {
+                headers: { Authorization: managementToken },
+            }
+        );
+        res.status(managementResponse.status).send(managementResponse.body);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error.message);
+    }
 };
 
 module.exports.ping = ping;
