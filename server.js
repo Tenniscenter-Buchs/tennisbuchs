@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -71,8 +72,14 @@ app.use(
 
 app.use(cors());
 
+const limiter = rateLimit({
+    windowMs: process.env.EXPRESS_RATE_LIMIT_WINDOW_MILLISECONDS || 1000,
+    max: process.env.EXPRESS_RATE_LIMIT || 10,
+    message: 'API rate limit hit, please try again in a short moment',
+});
+
 const pub = require('./routes/public');
-app.use('/api/v1/', pub);
+app.use('/api/v1/', limiter, pub);
 
 var jwtCheck;
 if (process.env.NODE_ENV === 'production') {
@@ -116,7 +123,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const secure = require('./routes/secure');
-app.use('/api/v1/secure/', jwtCheck, secure);
+app.use('/api/v1/secure/', limiter, jwtCheck, secure);
 
 if (
     process.env.NODE_ENV === 'production' ||

@@ -41,10 +41,14 @@ api.interceptors.response.use(
         ErrorContext.callback(res.status, '', '');
         return res;
     },
-    (res) => {
+    (error) => {
         Loader.disengage();
-        ErrorContext.callback(res.status, res.message, JSON.stringify(res));
-        return res;
+        ErrorContext.callback(
+            error.response.status,
+            error.response.data ? error.response.data : error.message,
+            JSON.stringify(error.response)
+        );
+        return Promise.reject(error);
     }
 );
 
