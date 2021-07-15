@@ -307,6 +307,7 @@ export default function CountrySelect(props) {
             }}
             autoHighlight
             getOptionLabel={(option) => option.label}
+            onChange={props.onChange}
             renderOption={(option) => (
                 <React.Fragment>
                     <span>{countryToFlag(option.code)}</span>

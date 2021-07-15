@@ -44,5 +44,6 @@
     "dismiss": "Verwerfen",
     "ok": "Okay",
     "errorDetails": "Fehler-Details",
-    "copyToClipboard": "Kopieren"
+    "copyToClipboard": "Kopieren",
+    "loggedInAs": "Eingeloggt als"
 }

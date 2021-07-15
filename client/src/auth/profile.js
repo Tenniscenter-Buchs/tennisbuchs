@@ -2,13 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import LoginButton from './login.js';
 import { domain } from '../index.js';
 import LanguageSelector from '../main/util/language-selector.js';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Loader from '../main/loader.js';
+
+const ProfileHeader = (props) => {
+    const userMetadata = props.userMetadata;
+    if (userMetadata) {
+        return (
+            <React.Fragment>
+                <Trans i18nKey="loggedInAs">Logged in as</Trans>
+                {' ' + userMetadata.firstName + ' ' + userMetadata.lastName}
+            </React.Fragment>
+        );
+    } else {
+        return null;
+    }
+};
 
 const Profile = () => {
     const { user, isAuthenticated, isLoading, getAccessTokenSilently, logout } =
@@ -24,7 +38,7 @@ const Profile = () => {
 
                 const mToken = await getAccessTokenSilently({
                     audience: `https://${domain}/api/v2/`,
-                    scope: 'read:current_user',
+                    scope: 'read:current_user update:current_user_metadata',
                 });
                 localStorage.setItem('managementToken', mToken);
 
@@ -83,6 +97,10 @@ const Profile = () => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
+                            <MenuItem
+                                component={ProfileHeader}
+                                userMetadata={userMetadata}
+                            />
                             <MenuItem
                                 component={Link}
                                 onClick={handleClose}
