@@ -173,8 +173,14 @@ export default function ProfileEditor() {
         billingAddress: {},
     });
 
-    const submitUpdates = async () => {
-        await api.post('/secure/user/metadata', formData);
+    const submitUpdates = () => {
+        api.post('/secure/user/validate-metadata', formData)
+            .then((res) => {
+                api.post('/secure/user/metadata', formData);
+            })
+            .catch((error) => {
+                // TODO: handle error display
+            });
     };
 
     return (

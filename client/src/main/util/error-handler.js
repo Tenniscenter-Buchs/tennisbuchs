@@ -72,6 +72,7 @@ function Snackbar(props) {
         if (rc >= 200 && rc < 300) {
             enqueueSnackbar(t('success', 'Success'), {
                 variant: 'success',
+                preventDuplicate: true,
                 action,
             });
         } else {

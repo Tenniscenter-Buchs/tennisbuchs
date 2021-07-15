@@ -31,6 +31,46 @@ router.get('/pong', controllers.pong);
  *         name: Authorization
  *         required: true
  *         description: Signed and valid bearer token
+ *       - in: header
+ *         name: X-Management-Token
+ *         required: true
+ *         description: Signed and valid bearer token
+ *     requestBody:
+ *       description: The metadata to merge into the existing data points
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Metadata'
+ *     description: Updates user metadata via Auth0 management API. Requires authorization.
+ *     responses:
+ *       200:
+ *         description: User metadata has successfully been updated
+ *       400:
+ *         description: Invalid email
+ *       401:
+ *         description: No valid access token has been found in the request or insufficient permissions to access the resource or no valid management token has been found in the request or insufficient permissions to access the resource
+ * components:
+ *   schemas:
+ *     Metadata:
+ *       type: object
+ *       properties:
+ *         email:
+ *           example: "info@example.com"
+ *           type: string
+ */
+router.post('/user/metadata', controllers.updateUserMetadata);
+
+/**
+ * @openapi
+ * /user/validate-metadata:
+ *   post:
+ *     summary: Validates user metadata
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         description: Signed and valid bearer token
  *     requestBody:
  *       description: The metadata to merge into the existing data points
  *       required: true
@@ -55,6 +95,6 @@ router.get('/pong', controllers.pong);
  *           example: "info@example.com"
  *           type: string
  */
-router.post('/user/metadata', controllers.updateUserMetadata);
+router.post('/user/validate-metadata', controllers.updateUserMetadata);
 
 module.exports = router;
