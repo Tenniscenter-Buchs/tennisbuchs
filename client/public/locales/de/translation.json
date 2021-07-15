@@ -1,5 +1,48 @@
 {
     "profile" : {
-        "editProfile": "Profil bearbeiten"
-    }
+        "profileString": "Profil",
+        "language": "Sprache",
+        "loading": "Laden...",
+        "login": "Einloggen",
+        "logout": "Ausloggen",
+        "editProfile": "Profil bearbeiten",
+        "editData": "Profil-Details bearbeiten",
+        "save": "Speichern",
+        "updatePassword": "Passwort aktualisieren",
+        "changePassword": "Passwort ändern",
+        "fields": {
+            "firstName": "Vorname",
+            "middleNames": "Mittlere Namen",
+            "lastName": "Nachname",
+            "email": "Email-Adresse",
+            "password": "Passwort",
+            "repeatPassword": "Passwort wiederholen",
+            "marketingEmails": "Ich möchte Neuigkeiten, Werbung und Updates via Email erhalten.",
+            "residenceAddressString": "Wohnadresse",
+            "billingAddressString": "Rechnungsadresse",
+            "address" : {
+                "street": "Strasse",
+                "number": "Hausnummer",
+                "postalCode": "Postleitzahl",
+                "city": "Gemeinde/Dorf/Stadt",
+                "province": "Kanton/Provinz/Bundesland",
+                "country": "Land",
+                "countries": {
+                    "ch": "Schweiz",
+                    "it": "Italien",
+                    "fr": "Frankreich",
+                    "en": "Grossbritannien"
+                }
+            },
+            "separateBillingAddress": "Rechnungsadresse unterscheidet sich von Wohnadresse"
+        }
+    },
+    "success": "Erfolg",
+    "error": "Fehler",
+    "notOnline": "Keine Verbindung zur API, entweder ist der Service down oder Sie haben die Netzwerk-Verbindung verloren",
+    "backOnline": "Verbindung zur API wieder hergestellt",
+    "dismiss": "Verwerfen",
+    "ok": "Okay",
+    "errorDetails": "Fehler-Details",
+    "copyToClipboard": "Kopieren"
 }

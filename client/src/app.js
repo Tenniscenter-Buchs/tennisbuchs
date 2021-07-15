@@ -1,18 +1,25 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Blog from './portfolio/Blog.js';
-import Loader from './loader.js';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
+import Blog from './main/Blog.js';
+import Loader from './main/loader.js';
+import { withTranslation } from 'react-i18next';
 
 const App = () => {
     useEffect(() => Loader.disengage());
 
     return (
         <div className="app">
-            <Router>
-                <Blog />
-            </Router>
+            {(window.cordova && (
+                <HashRouter>
+                    <Blog />
+                </HashRouter>
+            )) || (
+                <BrowserRouter>
+                    <Blog />
+                </BrowserRouter>
+            )}
         </div>
     );
 };
 
-export default App;
+export default withTranslation()(App);

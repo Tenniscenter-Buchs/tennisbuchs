@@ -6,6 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -71,8 +72,14 @@ app.use(
 
 app.use(cors());
 
+const limiter = rateLimit({
+    windowMs: process.env.EXPRESS_RATE_LIMIT_WINDOW_MILLISECONDS || 1000,
+    max: process.env.EXPRESS_RATE_LIMIT || 10,
+    message: 'API rate limit hit, please try again in a short moment',
+});
+
 const pub = require('./routes/public');
-app.use('/api/v1/', pub);
+app.use('/api/v1/', limiter, pub);
 
 var jwtCheck;
 if (process.env.NODE_ENV === 'production') {
@@ -83,7 +90,7 @@ if (process.env.NODE_ENV === 'production') {
             jwksRequestsPerMinute: 5,
             jwksUri: 'https://tennisbuchs.eu.auth0.com/.well-known/jwks.json',
         }),
-        audience: 'https://production.tennis-buchs.ch/api/v1/ping',
+        audience: 'https://production.tennis-buchs.ch/api/v1/',
         issuer: 'https://tennisbuchs.eu.auth0.com/',
         algorithms: ['RS256'],
     });
@@ -96,7 +103,7 @@ if (process.env.NODE_ENV === 'production') {
             jwksUri:
                 'https://tennisbuchs-staging.eu.auth0.com/.well-known/jwks.json',
         }),
-        audience: 'https://staging.tennis-buchs.ch/api/v1/ping',
+        audience: 'https://staging.tennis-buchs.ch/api/v1/',
         issuer: 'https://tennisbuchs-staging.eu.auth0.com/',
         algorithms: ['RS256'],
     });
@@ -109,14 +116,14 @@ if (process.env.NODE_ENV === 'production') {
             jwksUri:
                 'https://tennisbuchs-integration.eu.auth0.com/.well-known/jwks.json',
         }),
-        audience: 'http://localhost:5000/api/v1/ping',
+        audience: 'http://localhost:5000/api/v1/',
         issuer: 'https://tennisbuchs-integration.eu.auth0.com/',
         algorithms: ['RS256'],
     });
 }
 
 const secure = require('./routes/secure');
-app.use('/api/v1/', jwtCheck, secure);
+app.use('/api/v1/secure/', limiter, jwtCheck, secure);
 
 if (
     process.env.NODE_ENV === 'production' ||
