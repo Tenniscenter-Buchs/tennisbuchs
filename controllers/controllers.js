@@ -10,6 +10,7 @@ const updateUserMetadata = (req, res, next) => {
     // TODO: handle rate limits imposed by the management API
     if (!req.headers['x-management-token']) {
         res.status(401).send('No X-Management-Token header found');
+        return;
     }
     res.status(200).send();
 };

@@ -48,7 +48,7 @@ export default function CustomDialog(props) {
                 <DialogTitle id="scroll-dialog-title">
                     <Trans i18nKey="errorDetails">Error Details</Trans>
                 </DialogTitle>
-                <DialogContent dividers={false} style={{ maxHeight: '60vh' }}>
+                <DialogContent dividers={false} style={{ maxHeight: '40vh' }}>
                     <DialogContentText
                         id="scroll-dialog-description"
                         ref={descriptionElementRef}

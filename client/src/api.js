@@ -43,9 +43,30 @@ api.interceptors.response.use(
     },
     (error) => {
         Loader.disengage();
+        var rc;
+        var msg;
+        if (error.response) {
+            rc = error.response.status;
+            var shortMsg;
+            if (error.response.data) {
+                shortMsg = error.response.data;
+            } else {
+                shortMsg = error.message;
+            }
+            msg =
+                '[' +
+                error.response.status +
+                ' ' +
+                error.response.statusText +
+                '] - ' +
+                shortMsg;
+        } else {
+            rc = error.status;
+            msg = error.message;
+        }
         ErrorContext.callback(
-            error.response.status,
-            error.response.data ? error.response.data : error.message,
+            rc,
+            msg,
             JSON.stringify(error),
             JSON.stringify(error.response)
         );
